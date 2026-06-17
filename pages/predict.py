@@ -436,11 +436,15 @@ class TripletAttention(tf.keras.layers.Layer):
 # =========================
 # LOAD MODEL
 # =========================
-@st.cache_resource
 def load_model():
-    base_dir   = os.path.dirname(os.path.dirname(__file__))
-    model_path = os.path.join(base_dir, "model",
-                              "best_model_vgg+triplet.h5")
+    from huggingface_hub import hf_hub_download
+
+    model_path = hf_hub_download(
+        repo_id="Mishbahus/FMD_Class_VGG_TA",
+        filename="best_model_vgg+triplet.keras",
+        local_dir="/tmp/model"
+    )
+
     model = tf.keras.models.load_model(
         model_path,
         custom_objects={
